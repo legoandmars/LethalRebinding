@@ -1,4 +1,4 @@
-﻿using GameNetcodeStuff;
+using GameNetcodeStuff;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using UnityEngine.InputSystem;
 
 namespace LethalRebinding.Patches
 {
-    [HarmonyPatch(typeof(PlayerControllerB), "Awake")]
+    [HarmonyPatch(typeof(PlayerControllerB))]
     internal class PlayerControllerBPatch
     {
         private static List<PlayerControllerB>? _instances = new();
@@ -30,6 +30,8 @@ namespace LethalRebinding.Patches
             Debug.Log(bindings);
         }
 
+        [HarmonyPatch("Awake")]
+        [HarmonyPostfix]
         private static void Postfix(PlayerControllerB __instance)
         {
             _instances.Add(__instance);
@@ -40,5 +42,19 @@ namespace LethalRebinding.Patches
             // hope this doesn't break anything lol
             ApplyNewBindings(IngamePlayerSettings.Instance.settings.keyBindings);
         }
+
+        [HarmonyPatch("SetHoverTipAndCurrentInteractTrigger")]
+        [HarmonyPostfix]
+        private static void PostfixCursorTip(PlayerControllerB __instance)
+        {
+            if (__instance.cursorTip.text.Contains("[E]")) {
+                //Should be "Movement/Interact/[/Keyboard/<KEYBINDING>]"
+                //for example "Movement/Interact/[/Keyboard/f]"
+                string[] interactBinding = __instance.playerActions.FindAction("Interact").ToString().Split('/');
+                string newBinding = interactBinding[interactBinding.Length-1].Substring(0,1).ToUpper();
+                __instance.cursorTip.text= __instance.cursorTip.text.Replace("[E]", "[" + newBinding + "]");
+            }
+        }
+
     }
 }
