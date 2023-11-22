@@ -43,15 +43,16 @@ namespace LethalRebinding
             var scrollRectObject = new GameObject("Scroll View");
             var scrollRect = scrollRectObject.AddComponent<ScrollRect>();
             scrollRectObject.transform.SetParent(template.transform, false);
-            scrollRectObject.transform.localPosition = new Vector3(-100, -80, 0);
+            scrollRectObject.transform.localPosition = new Vector3(-113, -50, 0);
             // ApplyParentSize(scrollRectObject, template.transform.parent);
-            scrollRectObject.GetComponent<RectTransform>().sizeDelta = new Vector2(225, 200);
+            scrollRectObject.GetComponent<RectTransform>().sizeDelta = new Vector2(245, 150);
             var viewportObject = new GameObject("Viewport");
             ApplyParentSize(viewportObject, scrollRectObject.transform);
             viewportObject.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
             var viewportImage = viewportObject.AddComponent<Image>();
             viewportObject.AddComponent<Mask>();
-            viewportImage.color = new Color(1f, 1f, 1f, 0.002f);
+            // retain masking functionality with the lowest possible brightness image, don't wanna do this properly rn
+            viewportImage.color = new Color(0f, 0f, 0f, 0.002f);
 
             var contentObject = new GameObject("Content");
             ApplyParentSize(contentObject, viewportObject.transform);
