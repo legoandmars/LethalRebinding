@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
 using TMPro;
 using UnityEngine.UI;
+using LethalRebinding.Utilities;
 
 namespace LethalRebinding.Patches
 {

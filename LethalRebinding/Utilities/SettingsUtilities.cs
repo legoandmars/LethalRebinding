@@ -10,7 +10,7 @@ using UnityEngine.UI;
 using static IngamePlayerSettings;
 using Object = UnityEngine.Object;
 
-namespace LethalRebinding
+namespace LethalRebinding.Utilities
 {
     internal static class SettingsUtilities
     {

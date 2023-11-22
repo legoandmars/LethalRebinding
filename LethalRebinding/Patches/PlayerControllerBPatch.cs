@@ -1,5 +1,6 @@
 using GameNetcodeStuff;
 using HarmonyLib;
+using LethalRebinding.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,9 +51,8 @@ namespace LethalRebinding.Patches
             if (__instance.cursorTip.text.Contains("[E]")) {
                 //Should be "Movement/Interact/[/Keyboard/<KEYBINDING>]"
                 //for example "Movement/Interact/[/Keyboard/f]"
-                string[] interactBinding = __instance.playerActions.FindAction("Interact").ToString().Split('/');
-                string newBinding = interactBinding[interactBinding.Length-1].Substring(0,1).ToUpper();
-                __instance.cursorTip.text= __instance.cursorTip.text.Replace("[E]", "[" + newBinding + "]");
+                var interactBinding = __instance.playerActions.FindAction("Interact");
+                __instance.cursorTip.text= __instance.cursorTip.text.Replace("[E]", "[" + DisplayUtilities.LocalizeKey(interactBinding) + "]");
             }
         }
 
