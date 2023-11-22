@@ -20,17 +20,12 @@ namespace LethalRebinding.Patches
 
         public static void ApplyNewBindings(string bindings)
         {
-            foreach(var instance in _instances)
+            // TODO: Other null/exist checks (or check game state) to make sure this doesn't break anything?
+            foreach (var instance in _instances)
             {
                 if (instance == null) continue;
                 instance.playerActions.LoadBindingOverridesFromJson(bindings, true);
             }
-            // TODO: Other null/exist checks (or check game state) to make sure this doesn't break anything?
-            // if (_instance == null) return;
-            // _onDisable?.Invoke(_instance, new object[] { });
-            /*_instance.playerActions = new();
-            _instance.playerActions.LoadBindingOverridesFromJson(bindings, true);
-            _onEnable?.Invoke(_instance, new object[] { });*/
             Debug.Log("Applying new bindings!");
             Debug.Log(bindings);
         }

@@ -46,6 +46,8 @@ namespace LethalRebinding.Patches
             var container = setting.transform.parent.parent.gameObject;
             var scrollRect = SettingsUtilities.CreateScrollRect(container, scrollSettingBackground);
 
+            // TODO: Selective binding denying
+            // You should NOT be able to bind pause to left mouse. things will be terrible
             for (int i = 0; i < actions.Count; i++)
             {
                 var action = actions[i];

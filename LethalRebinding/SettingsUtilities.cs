@@ -123,6 +123,5 @@ namespace LethalRebinding
 
             return rect;
         }
-
     }
 }
