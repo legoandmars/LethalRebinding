@@ -14,6 +14,7 @@ namespace LethalRebinding.Patches
         private static void Postfix(IngamePlayerSettings __instance)
         {
             PlayerControllerBPatch.ApplyNewBindings(__instance.settings.keyBindings);
+            HUDManagerPatch.ApplyNewBindings(__instance.settings.keyBindings);
         }
     }
 
@@ -23,6 +24,7 @@ namespace LethalRebinding.Patches
         private static void Postfix(IngamePlayerSettings __instance)
         {
             PlayerControllerBPatch.ApplyNewBindings(__instance.settings.keyBindings);
+            HUDManagerPatch.ApplyNewBindings(__instance.settings.keyBindings);
         }
     }
 }

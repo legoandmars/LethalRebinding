@@ -21,6 +21,7 @@ namespace LethalRebinding.Patches
 
         public static void ApplyNewBindings(string bindings)
         {
+            //GameNetworkManager.Instance?.localPlayerController?.playerActions?.LoadBindingOverridesFromJson(bindings, true);
             // TODO: Other null/exist checks (or check game state) to make sure this doesn't break anything?
             foreach (var instance in _instances)
             {
@@ -31,7 +32,7 @@ namespace LethalRebinding.Patches
             Debug.Log(bindings);
         }
 
-        [HarmonyPatch("Awake")]
+        [HarmonyPatch("ConnectClientToPlayerObject")]
         [HarmonyPostfix]
         private static void Postfix(PlayerControllerB __instance)
         {
