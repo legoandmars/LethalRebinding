@@ -11,7 +11,7 @@ namespace LethalRebinding.Patches;
 [HarmonyPatch(typeof(PlayerControllerB))]
 internal class PlayerControllerBPatch
 {
-    private static List<PlayerControllerB> _instances = new();
+    private static readonly List<PlayerControllerB> Instances = new();
     private static MethodInfo? _onEnable;
     private static MethodInfo? _onDisable;
 
@@ -19,7 +19,7 @@ internal class PlayerControllerBPatch
     {
         //GameNetworkManager.Instance?.localPlayerController?.playerActions?.LoadBindingOverridesFromJson(bindings, true);
         // TODO: Other null/exist checks (or check game state) to make sure this doesn't break anything?
-        foreach (var instance in _instances)
+        foreach (var instance in Instances)
         {
             if (instance == null) continue;
             instance.playerActions.LoadBindingOverridesFromJson(bindings, true);
@@ -32,7 +32,7 @@ internal class PlayerControllerBPatch
     [HarmonyPostfix]
     private static void Postfix(PlayerControllerB __instance)
     {
-        _instances.Add(__instance);
+        Instances.Add(__instance);
         if (_onEnable == null) _onEnable = AccessTools.Method(typeof(PlayerControllerB), "OnEnable");
         if (_onDisable == null) _onDisable = AccessTools.Method(typeof(PlayerControllerB), "OnDisable");
 
