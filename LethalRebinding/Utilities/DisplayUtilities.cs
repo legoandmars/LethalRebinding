@@ -6,7 +6,7 @@ namespace LethalRebinding.Utilities
     internal static class DisplayUtilities
     {
         // TODO: it might be fine to just replace "LEFT" with L, same with right - not sure if this would break anything so i've just added some common key name mappings
-        private static Dictionary<string, string> _keyNameReplacements = new Dictionary<string, string>()
+        private static Dictionary<string, string> _keyNameReplacements = new()
         {
             { "LEFTBUTTON", "LMB" },
             { "RIGHTBUTTON", "RMB" },
