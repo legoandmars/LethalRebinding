@@ -11,7 +11,7 @@ namespace LethalRebinding.Patches;
 [HarmonyPatch(typeof(PlayerControllerB))]
 internal class PlayerControllerBPatch
 {
-    private static List<PlayerControllerB>? _instances = new();
+    private static List<PlayerControllerB> _instances = new();
     private static MethodInfo? _onEnable;
     private static MethodInfo? _onDisable;
 
