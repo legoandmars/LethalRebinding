@@ -13,7 +13,6 @@
 // limitations under the License.
 
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
 using HarmonyLib;
 using static UnityEngine.InputSystem.InputActionRebindingExtensions;
@@ -24,10 +23,17 @@ namespace LethalRebinding.Patches;
 public class AllowMouseBindings
 {
     static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> codes)
-        => codes.Where(code => {
-            var isLdstrMouse = code.opcode == OpCodes.Ldstr && code.OperandIs("Mouse");
-            var isExcludeCall = code.Calls(typeof(RebindingOperation).GetMethod("WithControlsExcluding"));
+        => codes.Manipulator(
+            instruction => {
+                var isLdstrMouse = instruction.opcode == OpCodes.Ldstr && instruction.OperandIs("Mouse");
+                var isExcludeCall = instruction.Calls(typeof(RebindingOperation).GetMethod("WithControlsExcluding"));
 
-            return !isLdstrMouse && !isExcludeCall;
-        });
+                return isLdstrMouse || isExcludeCall;
+            },
+            instruction =>
+            {
+                instruction.opcode = OpCodes.Nop;
+                instruction.operand = null;
+            }
+        );
 }
