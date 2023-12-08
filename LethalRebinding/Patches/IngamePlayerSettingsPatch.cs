@@ -24,8 +24,8 @@ internal class IngamePlayerSettingsPatch
         // not ideal but its what the game does
         // could be a transpiler to avoid two calls, don't wanna write rn
         SettingsOption[] settings = Object.FindObjectsOfType<SettingsOption>(true);
-        var validSettings = settings.Where(x => x != null && x.optionType == SettingsOptionType.ChangeBinding).ToList();
-        var scrollSetting = settings.Where(x => x != null && x.optionType == SettingsOptionType.MasterVolume).ToList().FirstOrDefault();
+        var validSettings = settings.Where(x => x is not null && x.optionType == SettingsOptionType.ChangeBinding).ToList();
+        var scrollSetting = settings.Where(x => x is not null && x.optionType == SettingsOptionType.MasterVolume).ToList().FirstOrDefault();
         // we only want to modify settings menus with a single keybind, which should exclude:
         // - panels without push to talk
         // - panels we've already modified
