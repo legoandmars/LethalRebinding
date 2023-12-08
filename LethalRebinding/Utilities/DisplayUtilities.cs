@@ -30,7 +30,7 @@ namespace LethalRebinding.Utilities
             string[] interactBinding = action.ToString().Split('/');
             // get the name of the binding, make it uppercase, and remove the brackets
             string newBinding = interactBinding[interactBinding.Length - 1].ToUpper().Replace("[", "").Replace("]", "");
-            if (_keyNameReplacements.ContainsKey(newBinding)) newBinding = _keyNameReplacements[newBinding];
+            if (_keyNameReplacements.TryGetValue(newBinding, out var replacement)) newBinding = replacement;
 
             return newBinding.ToUpper();
         }
