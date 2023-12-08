@@ -16,8 +16,7 @@ namespace LethalRebinding.Utilities
     {
         internal static GameObject GetSettingForInputAction(InputAction action, SettingsOption settingTemplate, Transform parent, int index = 0)
         {
-            var newSettingTransform = Object.Instantiate(settingTemplate.transform.parent.gameObject);
-            newSettingTransform.transform.SetParent(parent, false);
+            var newSettingTransform = Object.Instantiate(settingTemplate.transform.parent.gameObject, parent, false);
 
             // newSettingTransform.transform.localPosition = settingTemplate.GetComponent<Transform>().parent.localPosition + new Vector3(250, -(index * 20), 0);
             var newSetting = newSettingTransform.GetComponentInChildren<SettingsOption>();
@@ -35,8 +34,7 @@ namespace LethalRebinding.Utilities
         // horrible method. creating scrollrects through code is terrible
         internal static GameObject CreateScrollRect(GameObject template, Image scrollBackgroundImage)
         {
-            var copiedText = Object.Instantiate(template.transform.GetChild(0));
-            copiedText.SetParent(template.transform, false);
+            var copiedText = Object.Instantiate(template.transform.GetChild(0), template.transform, false);
             copiedText.transform.localPosition = new Vector3(-152.7989f, 36.4002f, 0);
             copiedText.GetComponent<TextMeshProUGUI>().SetText("BINDINGS");
 
