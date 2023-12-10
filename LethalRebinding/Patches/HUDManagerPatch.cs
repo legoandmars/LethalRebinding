@@ -27,20 +27,34 @@ namespace LethalRebinding.Patches
             {
                 if (instance == null) continue;
                 instance.playerActions.LoadBindingOverridesFromJson(bindings, true);
-
                 foreach (var line in instance.controlTipLines)
                 {
                     if (line == null) continue;
                     var linePrefix = line.text.Split(':')[0] + ":";
-                    if (!_actionNameByHudText.TryGetValue(linePrefix, out string actionName) && !linePrefix.StartsWith("Drop")) continue;
-                    if (linePrefix.StartsWith("Drop"))
+                    InputAction action = null;
+                    switch(line.text)
                     {
-                        actionName = "Discard";
+                        case string s when s.StartsWith("Drop"):
+                            action = IngamePlayerSettings.Instance.playerInput.actions.FindAction("Discard");
+                            break;
+                        case string s when s.Contains("[Q]"):
+                            action = IngamePlayerSettings.Instance.playerInput.actions.FindAction("ItemSecondaryUse");
+                            break;
+                        case string s when s.Contains("[Q/E]"):
+                            var action1 =  IngamePlayerSettings.Instance.playerInput.actions.FindAction("ItemSecondaryUse");
+                            var action2 = IngamePlayerSettings.Instance.playerInput.actions.FindAction("ItemTertiaryUse");
+                            if (action1 == null || action2 == null) continue;
+                            line.text = $"{linePrefix} [{DisplayUtilities.LocalizeKey(action1)}/{DisplayUtilities.LocalizeKey(action2)}]";
+                            continue; //special case, and can move onto the next line
+                            break;
+                        case string s when s.Contains("[Z]"):
+                            action = IngamePlayerSettings.Instance.playerInput.actions.FindAction("InspectItem");
+                            break;
+                        default:
+                            break;
+
                     }
-
-                    var action = instance.playerActions.FindAction(actionName);
                     if (action == null) continue;
-
                     line.text = $"{linePrefix} [{DisplayUtilities.LocalizeKey(action)}]";
                 }
             }
