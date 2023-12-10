@@ -52,7 +52,7 @@ namespace LethalRebinding.Patches
             if (__instance.cursorTip.text.Contains("[E]")) {
                 //Should be "Movement/Interact/[/Keyboard/<KEYBINDING>]"
                 //for example "Movement/Interact/[/Keyboard/f]"
-                var interactBinding = IngamePlayerSettings.Instance.playerInput.FindAction("Interact");
+                var interactBinding = IngamePlayerSettings.Instance.playerInput.actions.FindAction("Interact");
                 __instance.cursorTip.text= __instance.cursorTip.text.Replace("[E]", "[" + DisplayUtilities.LocalizeKey(interactBinding) + "]");
             }
         }
